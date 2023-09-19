@@ -1,24 +1,32 @@
-const app = require("express")();
+const express = require("express");
+const app = express();
 const dotenv = require("dotenv");
 const { chats } = require("./data/data");
+const connectDB = require("./config/db");
+const userRoutes = require("./routes/userRoutes")
+const chatRoutes = require("./routes/chatRoutes")
+const messageRoutes = require("./routes/messageRoutes");
+const { notFound, errorHandler } = require("./middlewares/errorMiddleware")
 
 let cors = require("cors");
+
 app.use(cors());
 
 dotenv.config();
+connectDB(); // to connect with DB
+
+app.use(express.json()); // to accept JSON data from frontend
 
 app.get("/", (req, res) => {
     res.send("hi")
-})
+});
 
-app.get("/api/chat", (req, res) => {
-    res.send(chats)
-})
+app.use("/api/user", userRoutes);
+app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
 
-app.get("/api/chat/:id", (req, res) => {
-    const singleChat = chats.find(chat => chat._id === req.params.id);
-    res.send(singleChat)
-})
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000
 
