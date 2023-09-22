@@ -8,14 +8,16 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ChatLoading from '../ChatLoading';
 import UserListItem from '../UserAvatar/UserListItem';
-
+import { getSender } from '../../config/ChatLogics';
+import Notification, {Effect} from 'react-notification-badge'
+import NotificationBadge from 'react-notification-badge/lib/components/NotificationBadge';
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState();
-  const { user, setSelectedChat, chats, setChats } = ChatState();
+  const { user, selectedChat, setSelectedChat, chats, setChats, notification, setNotification } = ChatState();
   const navigate = useNavigate();
   const btnRef = React.useRef();
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -104,10 +106,10 @@ const SideDrawer = () => {
         alignContent={'center'}
         bg={'white'}
         w={"100%"}
-        p="5px 10px 5px 10px"
+        p="5px 40px 5px 40px"
         borderWidth={5}>
         <Tooltip label="Search Users" hasArrow placement='bottom-end'>
-          <Button variant={'ghost'} onClick={onOpen}>
+          <Button variant={'ghost'} onClick={onOpen} bg={'gray.200'}>
             <i className="fa-solid fa-magnifying-glass" />
             <Text 
               display={{base: "none", md: "flex"}}
@@ -120,10 +122,47 @@ const SideDrawer = () => {
         <div>
           <Menu>
             <MenuButton p={1}>
+              <NotificationBadge
+                count = {notification.length}
+                effect = {Effect.Scale}
+                className= "m-x-5"/>
               <BellIcon 
                 fontSize={"3xl"}
-                m={1}/>
+                my={1}
+                mx={1}/>
             </MenuButton>
+            <MenuList display={"flex"} alignItems={'center'} justifyContent={'center'} flexDir={'column'}>
+              <Text
+                cursor={'pointer'}
+                textAlign={'right'}
+                alignSelf={"flex-end"}
+                pr={0.5}
+                mr={10}
+                color={'green.500'}
+                display={'flex'}
+                flexDir={'row'}
+                onClick={(() => setNotification([]))}>
+                <img 
+                  src={"https://static.tildacdn.com/tild6365-6330-4932-a338-373065383034/check_.png"}
+                  width={20}
+                  />
+                Mark as read
+              </Text>
+              { notification.length === 0 && <Box><Text>No new notification </Text></Box> }
+              { notification.map( noti => (
+                      <MenuItem 
+                        key={noti._id}
+                        onClick={(() => {
+                          setSelectedChat(noti.chat);
+                          setNotification(notification.filter(n => n !== noti))
+                        })}>
+                        {noti.chat.isGroupChat 
+                          ? `New notification from ${noti.chat.chatName}`
+                          : `New notification from ${getSender(user, noti.chat.users)}`}
+                      </MenuItem>
+              ))
+              }
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton p={1} as={Button} rightIcon={<ChevronDownIcon />}>
