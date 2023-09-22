@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ChatState } from '../Context/chatProvider'
-import { Box, FormControl, IconButton, Input, Spinner, Text, Textarea, useToast } from '@chakra-ui/react';
+import { Box, FormControl, IconButton, Input, InputGroup, InputLeftElement, InputRightElement, Spinner, Text, Textarea, useToast } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import { getSender, getSenderFull } from '../config/ChatLogics';
 import ProfileModal from './miscellaneous/ProfileModal';
@@ -11,6 +11,8 @@ import io from 'socket.io-client'
 import Lottie from 'react-lottie'
 import animationData from '../animations/typing.json'
 
+
+
 const END_POINT = "http://localhost:5000"
 var socket, selectedChatCompare;
 
@@ -19,10 +21,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [isTyping, setIsTyping] = useState(false)
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [newMessage, setNewMessage] = useState()
-    const { user, selectedChat, setSelectedChat } = ChatState();
+    const [newMessage, setNewMessage] = useState("")
+    const { user, selectedChat, setSelectedChat, notification, setNotification } = ChatState();
     const [socketConnected, setSocketConnected] = useState(false)
     const toast = useToast();
+
+    
     const defaultOptions = {
         loop: true,
         autoplay: true, 
@@ -47,7 +51,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
             const {data} = await axios.get(`api/message/${selectedChat._id}`, config);
 
-            console.log(data)
+            // console.log(data)
             setMessages(data);
             setLoading(false);
             socket.emit("join chat", selectedChat._id)
@@ -73,15 +77,20 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     useEffect(() => {
         fetchMessages();
-        selectedChatCompare = selectedChat;
+        // selectedChatCompare = selectedChat;
     }, [selectedChat]);
+
+    // console.log(notification, "-------------------------")
 
     useEffect(() => {
         socket.on("message received", (newMessageReceived) => {
-        if(!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id) {
-            // give notification
+        if(!selectedChat || selectedChat._id !== newMessageReceived.chat._id) {
+            if(!notification.includes(newMessageReceived)){
+                setNotification([newMessageReceived, ...notification])
+            }
         } else {
             setMessages([...messages, newMessageReceived]);
+            setFetchAgain(!fetchAgain);
         }
         });
     })
@@ -107,7 +116,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                             },
                             config
                         );
-                    console.log(data)
+                    // console.log(data)
                     socket.emit('new message', data)
                     setMessages([...messages, data])
                     
@@ -198,7 +207,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                         h={20}
                                         alignSelf="center"
                                         margin="auto"/>
-                                    : (<div className='flex flex-column overflow-y-scroll scroll'>
+                                    : (<div className='flex flex-column overflow-y-hidden h-full'>
                                         <ScrollableChat messages={messages} id='scrollable-chat'/>
                                     </div>)}
                                     {isTyping ? <div>
@@ -211,13 +220,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                         </div> : (<div></div>)}
                         </Box>
                         <FormControl onKeyDown={sendMessage} isRequired mt={3}>
-                            
-                            <Input 
-                                variant="filled"
+                                <Input 
+                                variant='outline'
                                 bg="blue.100"
                                 placeholder='Enter a message...'
                                 onChange={(e) => typingHandler(e.target.value)}
-                                value={newMessage} />
+                                value={newMessage}
+                                
+                                />
+                                
+                            
+                            
                         </FormControl>
                     </>
                 ) : (
