@@ -109,7 +109,7 @@ const SideDrawer = () => {
         p="5px 40px 5px 40px"
         borderWidth={5}>
         <Tooltip label="Search Users" hasArrow placement='bottom-end'>
-          <Button variant={'ghost'} onClick={onOpen} bg={'gray.200'}>
+          <Button variant={'ghost'} onClick={onOpen} bg={'gray.200'} mr={3}>
             <i className="fa-solid fa-magnifying-glass" />
             <Text 
               display={{base: "none", md: "flex"}}
@@ -118,7 +118,7 @@ const SideDrawer = () => {
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize={"3xl"} fontFamily={'sans-serif'}>WassApp</Text>
+        <Text fontSize={"3xl"} fontFamily={'sans-serif'}><span>WassApp</span></Text>
         <div>
           <Menu>
             <MenuButton p={1}>
@@ -164,8 +164,8 @@ const SideDrawer = () => {
               }
             </MenuList>
           </Menu>
-          <Menu>
-            <MenuButton p={1} as={Button} rightIcon={<ChevronDownIcon />}>
+          <Menu >
+            <MenuButton ml={3} p={1} as={Button} rightIcon={<ChevronDownIcon />}>
               <Avatar size={'sm'} cursor={'pointer'} name={user.name} src={user.pic}/>
             </MenuButton>
             <MenuList>
