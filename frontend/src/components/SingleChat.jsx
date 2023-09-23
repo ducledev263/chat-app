@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ChatState } from '../Context/chatProvider'
 import { Box, FormControl, IconButton, Input, InputGroup, InputLeftElement, InputRightElement, Spinner, Text, Textarea, useToast } from '@chakra-ui/react';
-import { ArrowBackIcon } from '@chakra-ui/icons';
+import { ArrowBackIcon, AttachmentIcon } from '@chakra-ui/icons';
 import { getSender, getSenderFull } from '../config/ChatLogics';
 import ProfileModal from './miscellaneous/ProfileModal';
 import UpdateGroupChatModal from './miscellaneous/UpdateGroupChatModal';
@@ -10,7 +10,8 @@ import ScrollableChat from './ScrollableChat';
 import io from 'socket.io-client'
 import Lottie from 'react-lottie'
 import animationData from '../animations/typing.json'
-
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 
 
 const END_POINT = "http://localhost:5000"
@@ -25,6 +26,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const { user, selectedChat, setSelectedChat, notification, setNotification } = ChatState();
     const [socketConnected, setSocketConnected] = useState(false)
     const toast = useToast();
+    const [showPicker, setShowPicker] = useState(false);
+    const onEmojiSelect = (emojiObject) => {
+        setNewMessage(prevInput => prevInput + emojiObject.native)
+    };
 
     
     const defaultOptions = {
@@ -35,10 +40,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         preserveAspectRatio: 'xMidYMid slice'
     }};
 
+    document.onclick = (e) => {
+        console.log(e.target.tagName)
+        if(e.target.tagName === "DIV" 
+        || e.target.tagName === "INPUT" 
+        || e.target.tagName === "SPAN" 
+        || e.target.tagName === "BUTTON") 
+            {setShowPicker(false)}};
 
     const fetchMessages = async () => {
-        if(!selectedChat) 
-            {return;}
+        if(!selectedChat) return;
 
         try {
             const config = {
@@ -50,8 +61,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             setLoading(true);
 
             const {data} = await axios.get(`api/message/${selectedChat._id}`, config);
-
-            // console.log(data)
             setMessages(data);
             setLoading(false);
             socket.emit("join chat", selectedChat._id)
@@ -73,24 +82,22 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         socket.on("connected", () => {setSocketConnected(true)});
         socket.on("typing", () => setIsTyping(true));
         socket.on("stop typing", () => setIsTyping(false));
-    })
+    },[])
 
     useEffect(() => {
         fetchMessages();
-        // selectedChatCompare = selectedChat;
+        selectedChatCompare = selectedChat;
     }, [selectedChat]);
-
-    // console.log(notification, "-------------------------")
 
     useEffect(() => {
         socket.on("message received", (newMessageReceived) => {
-        if(!selectedChat || selectedChat._id !== newMessageReceived.chat._id) {
+        if(!selectedChatCompare || selectedChatCompare._id !== newMessageReceived.chat._id) {
             if(!notification.includes(newMessageReceived)){
                 setNotification([newMessageReceived, ...notification])
+                setFetchAgain(!fetchAgain);
             }
         } else {
             setMessages([...messages, newMessageReceived]);
-            setFetchAgain(!fetchAgain);
         }
         });
     })
@@ -98,7 +105,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const sendMessage = async (e) => {
         if(e.key === "Enter" && newMessage) {
             try {
-                
                 socket.emit("stop typing", selectedChat._id);
                 const config = {
                     headers: {
@@ -108,7 +114,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     };
                 
                     setNewMessage("");
-
                     const { data } = await axios.post("/api/message",
                         {
                             content: newMessage,
@@ -116,7 +121,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                             },
                             config
                         );
-                    // console.log(data)
+
                     socket.emit('new message', data)
                     setMessages([...messages, data])
                     
@@ -220,6 +225,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                         </div> : (<div></div>)}
                         </Box>
                         <FormControl onKeyDown={sendMessage} isRequired mt={3}>
+                            <InputGroup>
                                 <Input 
                                 variant='outline'
                                 bg="blue.100"
@@ -228,9 +234,28 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                 value={newMessage}
                                 
                                 />
-                                
-                            
-                            
+                                <InputRightElement display={"flex"} justifyContent={'space-evenly'} width={20}>
+                                    <div>
+                                        <img
+                                        className='cursor-pointer'
+                                        src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
+                                        onClick={() => setShowPicker(!showPicker)}
+                                        />
+                                    </div>
+                                    <div className='absolute bottom-10 right-4'>
+                                    {showPicker && <Picker
+                                        data={data} 
+                                        onEmojiSelect={(e) => onEmojiSelect(e)} 
+                                        emojiSize={20}
+                                        previewPosition={'none'}
+                                        maxFrequentRows={1}
+                                        emojiButtonRadius={"6px"}
+                                        perLine={8}
+                                        />}
+                                    </div>
+                                    <AttachmentIcon cursor={'pointer'}/>
+                                </InputRightElement>
+                            </InputGroup>
                         </FormControl>
                     </>
                 ) : (
