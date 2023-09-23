@@ -16,6 +16,8 @@
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/modal": "^2.3.1",
     "@chakra-ui/react": "^2.8.1",
+    "@emoji-mart/data": "^1.1.2",
+    "@emoji-mart/react": "^1.1.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "axios": "^1.5.0",
