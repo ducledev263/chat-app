@@ -5,7 +5,7 @@ import ChatPage from './Pages/ChatPage'
 
 function App() {
   return (
-    <div className="flex min-h-screen bg-[url('./images/background.png')] 
+    <div className="flex min-h-screen bg-[url('https://cdn.muni.cz/media/3086281/socialni_site-media.jpg?mode=crop&center=0.5')] 
     bg-center bg-no-repeat bg-cover">
       <Routes>
         <Route exact path="/" element={<HomePage />} />
