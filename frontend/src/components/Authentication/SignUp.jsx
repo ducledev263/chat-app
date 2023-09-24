@@ -104,7 +104,7 @@ const SignUp = () => {
             const data = new FormData();
             data.append("file", e);
             data.append("upload_preset", "chat-app");
-            fetch("https://api.cloudinary.com/v1_1/dj0xj0bfk/image/upload", {
+            fetch(import.meta.env.VITE_CLOUDINARY_URI, {
                 method: "post",
                 body: data
             })
