@@ -34,6 +34,8 @@ const Login = () => {
             const config = {
                 headers: {
                     "Content-type": "application/json",
+                    'Accept': 'application/json',
+                    'Origin': 'https://chat-app-frontend-cngi.onrender.com/'
                 }
             }
             const { data } = await axios.post(`https://chat-app-backend-zzgd.onrender.com/api/user/login`, { email, password }, config);
