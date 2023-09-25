@@ -21,9 +21,9 @@ app.get("/", (req, res) => {
     res.send("hello from the other side")
 });
 
-app.use("/api/user", userRoutes);
-app.use("/api/chat", chatRoutes);
-app.use("/api/message", messageRoutes);
+app.use("https://chat-app-backend-zzgd.onrender.com/api/user", userRoutes);
+app.use("https://chat-app-backend-zzgd.onrender.com/api/chat", chatRoutes);
+app.use("https://chat-app-backend-zzgd.onrender.com/api/message", messageRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
