@@ -14,7 +14,7 @@ import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 
 
-const END_POINT = "http://localhost:5000"
+const END_POINT = import.meta.env.END_POINT;
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
