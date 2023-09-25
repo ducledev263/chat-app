@@ -18,7 +18,7 @@ connectDB(); // to connect with DB
 app.use(express.json()); // to accept JSON data from frontend
 
 app.get("/", (req, res) => {
-    res.send("hi")
+    res.send("hello from the other side")
 });
 
 app.use("/api/user", userRoutes);
