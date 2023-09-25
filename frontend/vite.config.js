@@ -8,7 +8,7 @@ export default ({ mode }) => {
 return defineConfig({
   server: {
     proxy: {
-      '/api': 'https://chat-app-darkielee.vercel.app/'
+      '/api': 'https://chat-app-backend-zzgd.onrender.com/'
     }
   },
   plugins: [react()],
