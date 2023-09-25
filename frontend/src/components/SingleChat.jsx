@@ -8,8 +8,8 @@ import UpdateGroupChatModal from './miscellaneous/UpdateGroupChatModal';
 import axios from 'axios';
 import ScrollableChat from './ScrollableChat';
 import io from 'socket.io-client'
-import Lottie from 'react-lottie'
-import animationData from '../animations/typing.json'
+import Lottie from 'lottie-react'
+import animation from '../animations/typing.json'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 
@@ -30,15 +30,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const onEmojiSelect = (emojiObject) => {
         setNewMessage(prevInput => prevInput + emojiObject.native)
     };
-
-    
-    const defaultOptions = {
-        loop: true,
-        autoplay: true, 
-        animationData: animationData,
-        rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
-    }};
 
     document.onclick = (e) => {
         console.log(e.target.tagName)
@@ -215,14 +206,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                     : (<div className='flex flex-column overflow-y-hidden h-full'>
                                         <ScrollableChat messages={messages} id='scrollable-chat'/>
                                     </div>)}
-                                    {isTyping ? <div>
+                                    {/*{isTyping ? <div>
                                             <Lottie 
-                                                options={defaultOptions}
-                                                height={"20px"}
-                                                width={'70px'}
+                                                loop= {true}
+                                                animationData= {animation}
                                                 
                                                 />
-                                        </div> : (<div></div>)}
+                                    </div> : (<div></div>)}*/}
                         </Box>
                         <FormControl onKeyDown={sendMessage} isRequired mt={3}>
                             <InputGroup>
