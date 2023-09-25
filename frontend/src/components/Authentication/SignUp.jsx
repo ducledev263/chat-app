@@ -49,7 +49,7 @@ const SignUp = () => {
                     "Content-type": "application/json",
                 }
             }
-            const { data } = await axios.post("/api/user", { name, email, password, pic}, config);
+            const { data } = await axios.post("https://chat-app-backend-zzgd.onrender.com/api/user", { name, email, password, pic}, config);
             toast({
                 title: "Registration Successfully!",
                 status: "success",

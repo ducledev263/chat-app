@@ -33,7 +33,7 @@ const SideDrawer = () => {
         }
       }
 
-      const {data} = await axios.post("/api/chat", { userId }, config);
+      const {data} = await axios.post("https://chat-app-backend-zzgd.onrender.com/api/chat", { userId }, config);
       console.log(data)
       console.log(chats)
 
@@ -82,7 +82,7 @@ const SideDrawer = () => {
         }
       }
 
-      const {data} = await axios.get(`/api/user?search=${search}`, config);
+      const {data} = await axios.get(`https://chat-app-backend-zzgd.onrender.com/api/user?search=${search}`, config);
 
       setLoading(false);
       setSearchResult(data);

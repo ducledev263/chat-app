@@ -31,7 +31,7 @@ const GroupChatModal = ({ children }) => {
                 },
             }
 
-            const { data } = await axios.get(`/api/user?search=${search}`, config);
+            const { data } = await axios.get(`https://chat-app-backend-zzgd.onrender.com/api/user?search=${search}`, config);
 
             setLoading(false);
             setSearchResult(data);

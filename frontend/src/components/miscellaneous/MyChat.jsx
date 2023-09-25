@@ -20,7 +20,7 @@ const MyChat = ({ fetchAgain }) => {
         },
       };
 
-      const { data } = await axios.get("/api/chat", config);
+      const { data } = await axios.get("https://chat-app-backend-zzgd.onrender.com/api/chat", config);
       setChats(data);
       console.log(chats);
     } catch (error) {
