@@ -90,7 +90,7 @@ const GroupChatModal = ({ children }) => {
                 },
             };
 
-            const { data } = await axios.post(`api/chat/group`, {
+            const { data } = await axios.post(`https://chat-app-backend-zzgd.onrender.com/api/chat/group`, {
                 name: groupChatName,
                 users: JSON.stringify(selectedUsers.map(user => user._id))
             },
