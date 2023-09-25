@@ -11,6 +11,8 @@ const { createServer } = require("http")
 
 let cors = require("cors");
 
+app.options('*', cors())
+
 const corsOptions = {
     optionsSuccessStatus: 200, // For legacy browser support
     credentials: true, // This is important.
@@ -34,8 +36,6 @@ app.use("/api/message", messageRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
-
-app.options('/api/user/login', cors())
 
 // app.all('/', function(req, res, next) {
 //     res.setHeader("Access-Control-Allow-Origin", "https://chat-app-frontend-cngi.onrender.com/");
