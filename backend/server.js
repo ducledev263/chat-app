@@ -11,9 +11,7 @@ const { createServer } = require("http")
 
 let cors = require("cors");
 
-app.use(cors(
-   { origin: "https://chat-app-frontend-cngi.onrender.com/"}
-));
+app.use(cors());
 
 dotenv.config();
 connectDB(); // to connect with DB
