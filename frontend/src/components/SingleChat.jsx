@@ -14,7 +14,7 @@ import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 
 
-const END_POINT = import.meta.env.END_POINT;
+const END_POINT = "https://chat-app-backend-zzgd.onrender.com/";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
