@@ -8,7 +8,7 @@ export default ({ mode }) => {
 return defineConfig({
   server: {
     proxy: {
-      '/api': process.env.END_POINT
+      '/api': 'https://chat-app-darkielee.vercel.app/'
     }
   },
   plugins: [react()],
