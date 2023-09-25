@@ -11,15 +11,7 @@ const { createServer } = require("http")
 
 let cors = require("cors");
 
-app.options('*', cors())
-
-const corsOptions = {
-    optionsSuccessStatus: 200, // For legacy browser support
-    credentials: true, // This is important.
-    origin: "https://chat-app-frontend-cngi.onrender.com/",
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 dotenv.config();
 connectDB(); // to connect with DB
@@ -37,14 +29,6 @@ app.use("/api/message", messageRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-app.all('/', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "https://chat-app-frontend-cngi.onrender.com/");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
-    next()
-});
 
 const PORT = process.env.PORT || 5000
 
