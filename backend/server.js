@@ -39,7 +39,7 @@ server.listen(PORT, console.log(`Server starts on port ${PORT}`));
 const io = require("socket.io")(server, {
     pingTimeOut: 60000,
     cors: {
-        origin: "https://chat-app-frontend-cngi.onrender.com/"
+        origin: "https://chat-app-frontend-cngi.onrender.com"
     },
 });
 
