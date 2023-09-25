@@ -7,6 +7,7 @@ const userRoutes = require("./routes/userRoutes")
 const chatRoutes = require("./routes/chatRoutes")
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware")
+const { createServer } = require("http")
 
 let cors = require("cors");
 
@@ -30,7 +31,9 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000
 
-const server = app.listen(PORT, console.log(`Server starts on port ${PORT}`));
+// const server = app.listen(PORT, console.log(`Server starts on port ${PORT}`));
+
+const server = createServer();
 
 const io = require("socket.io")(server, {
     pingTimeOut: 60000,
