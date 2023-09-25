@@ -35,7 +35,7 @@ const server = app.listen(PORT, console.log(`Server starts on port ${PORT}`));
 const io = require("socket.io")(server, {
     pingTimeOut: 60000,
     cors: {
-        origin: "http://localhost:5173"
+        origin: process.env.ORIGIN
     },
 });
 
