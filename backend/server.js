@@ -31,11 +31,11 @@ app.use("/api/message", messageRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-app.all('/', function(req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "https://chat-app-frontend-cngi.onrender.com/");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next()
-});
+// app.all('/', function(req, res, next) {
+//     res.setHeader("Access-Control-Allow-Origin", "https://chat-app-frontend-cngi.onrender.com/");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     next()
+// });
 
 const PORT = process.env.PORT || 5000
 
