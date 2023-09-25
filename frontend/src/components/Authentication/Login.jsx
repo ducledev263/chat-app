@@ -36,7 +36,7 @@ const Login = () => {
                     "Content-type": "application/json",
                 }
             }
-            const { data } = await axios.post("/api/user/login", { email, password }, config);
+            const { data } = await axios.post(`${import.meta.env.END_POINT}/api/user/login`, { email, password }, config);
             toast({
                 title: "Login Successfully!",
                 status: "success",
