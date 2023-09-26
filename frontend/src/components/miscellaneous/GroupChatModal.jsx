@@ -98,7 +98,8 @@ const GroupChatModal = ({ children }) => {
 
             setLoading(false);
             setChats([data, ...chats]);
-            setSelectedUsers([])
+            setSelectedUsers([]);
+            setSearchResult([]);
             onClose();
             toast({
                 title: "Group chat created successfully",
