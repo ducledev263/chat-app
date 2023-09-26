@@ -5,7 +5,7 @@ import ChatPage from './Pages/ChatPage'
 
 function App() {
   return (
-    <div className="flex min-h-screen bg-[url('https://connecteddeviceslab.org/wp-content/uploads/2016/08/MLseries-1-1440x1080.png')] 
+    <div className="flex min-h-screen bg-[url('https://www.mpsonthego.com/uploads/processed/images/67d25da96675b13234c8615c209fd4a450f346f5.png')] 
     bg-center bg-no-repeat bg-cover">
       <Routes>
         <Route exact path="/" element={<HomePage />} />
