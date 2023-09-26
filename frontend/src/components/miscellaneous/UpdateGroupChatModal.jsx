@@ -206,7 +206,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         setGroupChatName("");
     };
 
-    const handleDelGroup = async (chatId) => {
+    const handleDelGroup = async (chat) => {
         if (selectedChat.groupAdmin._id !== user._id) {
             toast({
                 title: "Only admins can delete group chat!",
@@ -227,7 +227,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                     },
                 };
             
-            const { data } = await axios.delete(`https://chat-app-backend-zzgd.onrender.com/api/chat/delgroup`, { chatId: chatId }, config);
+            const { data } = await axios.delete(`https://chat-app-backend-zzgd.onrender.com/api/chat/delgroup`, { chatId: chat._id }, config);
 
             setSelectedChat();
             setChats(data);
@@ -302,7 +302,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                 )}
             </ModalBody>
             <ModalFooter>
-                <Button onClick={() => handleDelGroup(selectedChat._id)} colorScheme="red">
+                <Button onClick={() => handleDelGroup(selectedChat)} colorScheme="red">
                         Delete Group
                 </Button>
                 <Button onClick={() => handleRemove(user)} colorScheme="red">
