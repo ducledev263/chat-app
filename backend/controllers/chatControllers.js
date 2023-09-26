@@ -161,4 +161,17 @@ const addToGroup = asyncHandler( async (req, res) => {
     }
 })
 
-module.exports = { accessChat, fetchChats, createGroupChat, renameGroup, removeFromGroup, addToGroup };
+const delGroup = asyncHandler( async (req, res) => {
+    const { chatId } = req.body;
+    
+    const delGroup = await Chat.findByIdAndDelete(chatId);
+
+    if(!delGroup) {
+        res.status(400);
+        throw new Error("Error occured");
+    }else{
+        res.json(delGroup);
+    }
+})
+
+module.exports = { accessChat, fetchChats, createGroupChat, renameGroup, removeFromGroup, addToGroup, delGroup };
