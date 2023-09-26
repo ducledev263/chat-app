@@ -28,7 +28,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     const [searchResult, setSearchResult] = useState([]);
     const [loading, setLoading] = useState(false);
     const [renameLoading, setRenameLoading] = useState(false);
-    const { selectedChat, setSelectedChat, user } = ChatState();
+    const { selectedChat, setSelectedChat, user, setChats } = ChatState();
     const toast = useToast();
 
     const handleRename = async () => {
@@ -176,16 +176,15 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
             const config = {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
-                },
-                };
-                const { data } = await axios.put(
+                }};
+            
+            const { data } = await axios.put(
                 `https://chat-app-backend-zzgd.onrender.com/api/chat/groupremove`,
                 {
                     chatId: selectedChat._id,
                     userId: user1._id,
                 },
-                config
-                );
+                config);
 
                 user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
                 setFetchAgain(!fetchAgain);
@@ -204,6 +203,45 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
             }
         setGroupChatName("");
     };
+
+    const handleDelGroup = async (chatId) => {
+        if (selectedChat.groupAdmin._id !== user._id) {
+            toast({
+                title: "Only admins can delete group chat!",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "top",
+                });
+                return;
+        }
+
+        try {
+            setLoading(true);
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                }};
+            
+            const { data } = await axios.delete(`https://chat-app-backend-zzgd.onrender.com/api/chat/delgroup`, { chatId }, config);
+
+            setSelectedChat();
+            setChats(data);
+            setFetchAgain(!fetchAgain);
+            setLoading(false);
+    
+        } catch (error) {
+            toast({
+                title: "Error Occured!",
+                description: error.response.data.message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "top",
+                });
+                setLoading(false);
+        }
+    }
 
     return (
         <>
@@ -260,6 +298,9 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                 )}
             </ModalBody>
             <ModalFooter>
+                <Button onClick={() => handleDelGroup(selectedChat._id)} colorScheme="red">
+                        Delete Group
+                </Button>
                 <Button onClick={() => handleRemove(user)} colorScheme="red">
                     Leave Group
                 </Button>
