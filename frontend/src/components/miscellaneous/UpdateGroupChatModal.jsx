@@ -228,12 +228,12 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                 };
             
             const { data } = await axios.delete(`https://chat-app-backend-zzgd.onrender.com/api/chat/delgroup`, {
+                data: { 
+                    chatId: chat._id 
+                },
                 headers: {
                     Authorization: `Bearer ${user.token}`,
-                },
-                // data: { 
-                //     chatId: chat._id 
-                // }
+                }
             });
 
             setSelectedChat();
