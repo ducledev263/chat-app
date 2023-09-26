@@ -12,7 +12,7 @@ const { createServer } = require("http")
 let cors = require("cors");
 
 app.use(cors({
-    origin: "https://chat-app-frontend-cngi.onrender.com"
+    origin: "https://chat-app-wassapp.onrender.com"
 }));
 
 dotenv.config();
@@ -41,7 +41,7 @@ server.listen(PORT, console.log(`Server starts on port ${PORT}`));
 const io = require("socket.io")(server, {
     pingTimeOut: 60000,
     cors: {
-        origin: "https://chat-app-frontend-cngi.onrender.com"
+        origin: "https://chat-app-wassapp.onrender.com"
     },
 });
 
