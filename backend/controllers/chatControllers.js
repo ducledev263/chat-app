@@ -163,7 +163,6 @@ const addToGroup = asyncHandler( async (req, res) => {
 
 const delGroup = asyncHandler( async (req, res) => {
     console.log(req.body);
-    console.log(req.data);
     const { chatId } = req.body;
     
     const delGroup = await Chat.findByIdAndDelete(chatId);
@@ -171,8 +170,9 @@ const delGroup = asyncHandler( async (req, res) => {
     if(!delGroup) {
         res.status(400);
         throw new Error("Error occured");
-    }else{
-        res.json(delGroup);
+    }
+    else{
+        res.status(200).json({success: true})
     }
 })
 
