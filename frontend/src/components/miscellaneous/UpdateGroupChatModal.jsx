@@ -220,6 +220,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
             setLoading(true);
             const config = {
                 headers: {
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${user.token}`,
                 }};
             
