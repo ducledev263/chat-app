@@ -302,7 +302,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                         Delete Group
                 </Button>
                 <Button onClick={() => handleRemove(user)} colorScheme="red">
-                    Delete Group
+                    Leave Group
                 </Button>
             </ModalFooter>
             </ModalContent>
