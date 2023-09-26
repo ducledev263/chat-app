@@ -46,7 +46,8 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
 
         try {
             setRenameLoading(true);
-
+            console.log(user.token);
+            
             const config = {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
