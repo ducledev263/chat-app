@@ -231,9 +231,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
-                data: { 
-                    chatId: chat._id 
-                }});
+                // data: { 
+                //     chatId: chat._id 
+                // }
+            });
 
             setSelectedChat();
             setChats(data);
