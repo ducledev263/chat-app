@@ -47,7 +47,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         try {
             setRenameLoading(true);
             console.log(user.token);
-            
+
             const config = {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
@@ -226,7 +226,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                     },
                 };
             
-            const { data } = await axios.delete(`https://chat-app-backend-zzgd.onrender.com/api/chat/delgroup`, { chatId }, config);
+            const { data } = await axios.delete(`https://chat-app-backend-zzgd.onrender.com/api/chat/delgroup`, { chatId: chatId }, config);
 
             setSelectedChat();
             setChats(data);
