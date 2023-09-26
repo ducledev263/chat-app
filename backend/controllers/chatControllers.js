@@ -162,7 +162,7 @@ const addToGroup = asyncHandler( async (req, res) => {
 })
 
 const delGroup = asyncHandler( async (req, res) => {
-    const { chatId } = req.body.data;
+    const { chatId } = req.data;
     
     const delGroup = await Chat.findByIdAndDelete(chatId);
 
