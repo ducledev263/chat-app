@@ -220,9 +220,9 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
             setLoading(true);
             const config = {
                 headers: {
-                    "Content-type": "application/json",
                     Authorization: `Bearer ${user.token}`,
-                }};
+                    },
+                };
             
             const { data } = await axios.delete(`https://chat-app-backend-zzgd.onrender.com/api/chat/delgroup`, { chatId }, config);
 
