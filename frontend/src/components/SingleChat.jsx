@@ -29,6 +29,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const toast = useToast();
     const [showPicker, setShowPicker] = useState(false);
     const [file, setFile] = useState([]);
+    const [imageSend, setImageSend] = useState("")
 
     const onEmojiSelect = (emojiObject) => {
         setNewMessage(prevInput => prevInput + emojiObject.native)
@@ -220,6 +221,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                                 
                                                 />
                                     </div> : (<div></div>)}*/}
+                                    { imageSend 
+                                        ? (<div>{imageSend}</div>)
+                                        : (<div></div>)}
                         </Box>
                         <FormControl onKeyDown={sendMessage} isRequired mt={3}>
                             <InputGroup>
@@ -258,7 +262,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                         style={{display: "none"}}
                                         onChange={e => {
                                             setFile(e.target.files[0])
-                                            setNewMessage(e.target.files[0].name)
+                                            setImageSend(e.target.files[0].name)
                                         }}/>
                                 </InputRightElement>
                             </InputGroup>
