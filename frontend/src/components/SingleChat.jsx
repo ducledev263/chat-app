@@ -28,6 +28,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [socketConnected, setSocketConnected] = useState(false)
     const toast = useToast();
     const [showPicker, setShowPicker] = useState(false);
+    const [file, setFile] = useState([]);
+    const [placeholder, setPlaceholder] = useState("")
+
     const onEmojiSelect = (emojiObject) => {
         setNewMessage(prevInput => prevInput + emojiObject.native)
     };
@@ -248,8 +251,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                         perLine={8}
                                         />}
                                     </div>
-                                    <AttachmentIcon cursor={'pointer'} onClick={selectFile}/>
-                                    <input type='file' accept="image/x-png,image/gif,image/jpeg" ref={fileRef}/>
+                                    <AttachmentIcon cursor={'pointer'} onClick={selectFile} />
+                                    <input 
+                                        type='file' 
+                                        accept="image/*" 
+                                        ref={fileRef}
+                                        onChange={e => {
+                                            setFile(e.target.files[0])
+                                            setPlaceholder(e.target.files[0].name)
+                                        }}/>
                                 </InputRightElement>
                             </InputGroup>
                         </FormControl>
