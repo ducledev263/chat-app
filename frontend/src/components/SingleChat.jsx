@@ -222,7 +222,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                                 />
                                     </div> : (<div></div>)}*/}
                                     { imageSend 
-                                        ? (<div className='flex flex-end bg-green-400'><Text>{imageSend}</Text></div>)
+                                        ? (<div className='flex flex-row-reverse bg-green-200'><Text>{imageSend}</Text></div>)
                                         : (<div></div>)}
                         </Box>
                         <FormControl onKeyDown={sendMessage} isRequired mt={3}>
