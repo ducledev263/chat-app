@@ -261,11 +261,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                         type='file' 
                                         accept="image/*" 
                                         ref={fileRef}
+                                        style={{display: "none"}}
                                         onChange={e => {
                                             setFile(e.target.files[0])
                                             setPlaceholder(e.target.files[0].name)
                                             setPlaceholderStatus(true)
-                                        style={display: "none"}
                                         }}/>
                                 </InputRightElement>
                             </InputGroup>
