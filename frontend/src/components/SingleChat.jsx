@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ChatState } from '../Context/chatProvider'
 import { Box, FormControl, IconButton, Input, InputGroup, InputLeftElement, InputRightElement, Spinner, Text, Textarea, useToast } from '@chakra-ui/react';
 import { ArrowBackIcon, AttachmentIcon } from '@chakra-ui/icons';
@@ -18,6 +18,7 @@ const END_POINT = "https://chat-app-backend-zzgd.onrender.com/";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
+    const fileRef = useRef();
     const [typing, setTyping] = useState(false);
     const [isTyping, setIsTyping] = useState(false)
     const [messages, setMessages] = useState([]);
@@ -38,6 +39,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         || e.target.tagName === "SPAN" 
         || e.target.tagName === "BUTTON") 
             {setShowPicker(false)}};
+
+    const selectFile = () => {
+        fileRef.current.click();
+    }
 
     const fetchMessages = async () => {
         if(!selectedChat) return;
@@ -243,7 +248,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                         perLine={8}
                                         />}
                                     </div>
-                                    <AttachmentIcon cursor={'pointer'}/>
+                                    <AttachmentIcon cursor={'pointer'} onClick={selectFile}/>
+                                    <input type='file' accept="image/x-png,image/gif,image/jpeg" ref={fileRef}/>
                                 </InputRightElement>
                             </InputGroup>
                         </FormControl>
