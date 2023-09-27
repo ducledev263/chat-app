@@ -12,7 +12,7 @@ import Lottie from 'lottie-react'
 import animation from '../animations/typing.json'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const END_POINT = "https://chat-app-backend-zzgd.onrender.com/";
 var socket, selectedChatCompare;
@@ -223,11 +223,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                     </div> : (<div></div>)}*/}
                                     { imageSend 
                                         ? (<div className='flex flex-row-reverse bg-green-200'>
-                                        <span className='flex justify-center ml-3'>
-                                            <img 
-                                                src='https://www.vhv.rs/dpng/d/156-1569718_close-button-icon-png-transparent-png.png' 
-                                                width='10px'/>
-                                        </span>
+                                        <FontAwesomeIcon icon="fa-solid fa-xmark" />
                                         <Text>{imageSend}</Text></div>)
                                         : (<div></div>)}
                         </Box>
