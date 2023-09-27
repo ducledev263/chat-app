@@ -221,7 +221,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                                 />
                                     </div> : (<div></div>)}*/}
                                     { imageSend 
-                                        ? (<div className='flex flex-row-reverse bg-green-200'>
+                                        ? (<div className='flex flex-row-reverse bg-[#BEE3F8] mt-2'>
                                         <span className='flex justify-center items-center h-full ml-3'>
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
                                             <path 
