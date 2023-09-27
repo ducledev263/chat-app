@@ -30,6 +30,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [showPicker, setShowPicker] = useState(false);
     const [file, setFile] = useState([]);
     const [placeholder, setPlaceholder] = useState("")
+    const [placeholderStatus, setPlaceholderStatus] = useState(false);
 
     const onEmojiSelect = (emojiObject) => {
         setNewMessage(prevInput => prevInput + emojiObject.native)
@@ -227,7 +228,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                 <Input 
                                 variant='outline'
                                 bg="blue.100"
-                                placeholder='Enter a message...'
+                                placeholder={
+                                    placeholderStatus 
+                                        ? (placeholder)
+                                        : ("Enter new message...")
+                                }
                                 onChange={(e) => typingHandler(e.target.value)}
                                 value={newMessage}
                                 
@@ -259,6 +264,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                         onChange={e => {
                                             setFile(e.target.files[0])
                                             setPlaceholder(e.target.files[0].name)
+                                            setPlaceholderStatus(true)
+                                        style={display: "none"}
                                         }}/>
                                 </InputRightElement>
                             </InputGroup>
