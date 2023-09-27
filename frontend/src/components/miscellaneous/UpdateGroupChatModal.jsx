@@ -160,6 +160,33 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         }
     }
 
+    const handleConfirmLeave = (user) => {
+        const { isOpen, onOpen, onClose } = useDisclosure();
+        return (
+            <Box>
+                <Button onClick={onOpen}>Open Modal</Button>
+            
+                <Modal isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                    <ModalHeader>Warning</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        You are about to leave the group chat. Are you sure? This action cannot be reversed.
+                    </ModalBody>
+            
+                    <ModalFooter>
+                        <Button variant='ghost' colorScheme='blue' mr={3} onClick={onClose}>
+                        Cancel
+                        </Button>
+                        <Button colorScheme='red' onClick={handleRemove(user)}>Leave</Button>
+                    </ModalFooter>
+                    </ModalContent>
+                </Modal>
+                </Box>
+            )
+    }
+
     const handleRemove = async (user1) => {
         if (selectedChat.groupAdmin._id !== user._id && user1._id !== user._id) {
             toast({
@@ -206,6 +233,33 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         setGroupChatName("");
     };
 
+    const handleConfirmDel = (chat) => {
+        const { isOpen, onOpen, onClose } = useDisclosure();
+        return (
+            <Box>
+                <Button onClick={onOpen}>Open Modal</Button>
+            
+                <Modal isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                    <ModalHeader>Warning</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        You are about to delete the group chat. Are you sure? This action cannot be reversed.
+                    </ModalBody>
+            
+                    <ModalFooter>
+                        <Button variant='ghost' colorScheme='blue' mr={3} onClick={onClose}>
+                        Cancel
+                        </Button>
+                        <Button colorScheme='red' onClick={handleDelGroup(chat)}>Delete</Button>
+                    </ModalFooter>
+                    </ModalContent>
+                </Modal>
+                </Box>
+            )
+    }
+
     const handleDelGroup = async (chat) => {
         if (selectedChat.groupAdmin._id !== user._id) {
             toast({
@@ -222,7 +276,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
             setLoading(true);
             console.log(user.token)
 
-            const { data } = await axios.delete(`https://chat-app-backend-zzgd.onrender.com/api/chat/delgroup`, {
+            await axios.delete(`https://chat-app-backend-zzgd.onrender.com/api/chat/delgroup`, {
                 data: { 
                     chatId: chat._id 
                 },
@@ -303,10 +357,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                 )}
             </ModalBody>
             <ModalFooter>
-                <Button onClick={() => handleDelGroup(selectedChat)} colorScheme="red">
+                <Button onClick={() => handleConfirmDel(selectedChat)} colorScheme="red">
                         Delete Group
                 </Button>
-                <Button onClick={() => handleRemove(user)} colorScheme="red" marginLeft={5}>
+                <Button onClick={() => handleConfirmLeave(user)} colorScheme="blue" marginLeft={5}>
                     Leave Group
                 </Button>
             </ModalFooter>
