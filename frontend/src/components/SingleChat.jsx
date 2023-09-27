@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ChatState } from '../Context/chatProvider'
 import { Box, FormControl, IconButton, Input, InputGroup, InputLeftElement, InputRightElement, Spinner, Text, Textarea, useToast } from '@chakra-ui/react';
-import { ArrowBackIcon, AttachmentIcon } from '@chakra-ui/icons';
+import { ArrowBackIcon, AttachmentIcon, CloseIcon } from '@chakra-ui/icons';
 import { getSender, getSenderFull } from '../config/ChatLogics';
 import ProfileModal from './miscellaneous/ProfileModal';
 import UpdateGroupChatModal from './miscellaneous/UpdateGroupChatModal';
@@ -222,7 +222,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                                 />
                                     </div> : (<div></div>)}*/}
                                     { imageSend 
-                                        ? (<div className='flex flex-row-reverse bg-green-200'><Text>{imageSend}</Text></div>)
+                                        ? (<div className='flex flex-row-reverse bg-green-200'>
+                                        <CloseIcon onClick={setFile([])}/>
+                                        <Text>{imageSend}</Text></div>)
                                         : (<div></div>)}
                         </Box>
                         <FormControl onKeyDown={sendMessage} isRequired mt={3}>
