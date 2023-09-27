@@ -223,7 +223,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                     </div> : (<div></div>)}*/}
                                     { imageSend 
                                         ? (<div className='flex flex-row-reverse bg-green-200'>
-                                        <CloseIcon onClick={setFile([])}/>
+                                        <IconButton 
+                                            icon={<CloseIcon />} 
+                                            onClick={setFile([])}
+                                            isRound={true}
+                                            variant='ghost'/>
                                         <Text>{imageSend}</Text></div>)
                                         : (<div></div>)}
                         </Box>
