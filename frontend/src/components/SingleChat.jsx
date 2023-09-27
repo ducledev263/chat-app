@@ -223,10 +223,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                     </div> : (<div></div>)}*/}
                                     { imageSend 
                                         ? (<div className='flex flex-row-reverse bg-green-200'>
-                                        <span>
+                                        <span className='flex justify-center ml-3'>
                                             <img 
                                                 src='https://www.vhv.rs/dpng/d/156-1569718_close-button-icon-png-transparent-png.png' 
-                                                width='5px'/>
+                                                width='10px'/>
                                         </span>
                                         <Text>{imageSend}</Text></div>)
                                         : (<div></div>)}
