@@ -163,7 +163,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     const handleConfirmLeave = (user) => {
         const { isOpen, onOpen, onClose } = useDisclosure();
         return (
-            <Box>
+            <>
                 <Button onClick={onOpen}>Open Modal</Button>
             
                 <Modal isOpen={isOpen} onClose={onClose}>
@@ -183,7 +183,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                     </ModalFooter>
                     </ModalContent>
                 </Modal>
-                </Box>
+                </>
             )
     }
 
@@ -236,7 +236,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
     const handleConfirmDel = (chat) => {
         const { isOpen, onOpen, onClose } = useDisclosure();
         return (
-            <Box>
+            <>
                 <Button onClick={onOpen}>Open Modal</Button>
             
                 <Modal isOpen={isOpen} onClose={onClose}>
@@ -256,7 +256,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                     </ModalFooter>
                     </ModalContent>
                 </Modal>
-                </Box>
+                </>
             )
     }
 
