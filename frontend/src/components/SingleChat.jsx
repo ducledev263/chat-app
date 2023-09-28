@@ -100,7 +100,43 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         });
     })
 
+    const uploadImage = (e) => {
+        if (e.type === "image/jpeg" || e.type === "image/png" || e.type === "image/gif") {
+            const data = new FormData();
+            data.append("file", e);
+            data.append("upload_preset", "chat-app");
+            fetch(import.meta.env.VITE_CLOUDINARY_URI, {
+                method: "post",
+                body: data
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+                setImageReceive(data.url.toString())
+                setLoading(false)
+                toast({
+                    title: "Image uploaded successfully!",
+                    status: "success",
+                    duration: 2500,
+                    isClosable: true,
+                    position: "top",
+                })
+            })
+        }
+    }
+
     const sendMessage = async (e) => {
+        if(e.key === "Enter" && newMessage && imageSend) {
+            toast({
+                title: "Error Occured!",
+                description: "Please only send text message or image message",
+                status: "error",
+                duration: 2500,
+                isClosable: true,
+                position: "top",
+            });
+            return;
+        }
         if(e.key === "Enter" && newMessage && !imageSend) {
             try {
                 socket.emit("stop typing", selectedChat._id);
@@ -132,6 +168,42 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     isClosable: true,
                     position: "top",
                 });
+                return;
+            }
+        }
+
+        if(e.key === "Enter" && !newMessage && imageReceive) {
+            try {
+                socket.emit("stop typing", selectedChat._id);
+                const config = {
+                    headers: {
+                        "Content-type": "application/json",
+                        Authorization: `Bearer ${user.token}`,
+                        },
+                    };
+                
+                    setNewMessage("");
+                    const { data } = await axios.post("https://chat-app-backend-zzgd.onrender.com/api/message",
+                        {
+                            content: 'image ' + imageReceive,
+                            chatId: selectedChat._id,
+                        },
+                            config
+                        );
+
+                    socket.emit('new message', data)
+                    setMessages([...messages, data])
+                    
+            } catch (error) {
+                toast({
+                    title: "Error Occured!",
+                    description: "Failed to Load the Messages",
+                    status: "error",
+                    duration: 2500,
+                    isClosable: true,
+                    position: "top",
+                });
+                return;
             }
         }
     }
@@ -224,17 +296,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                         ? (<div className='flex flex-row-reverse bg-[#BEE3F8] mt-2'>
                                         <span className='flex justify-center items-center h-full ml-3'>
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
-                                            <path 
-                                                onClick={() => {
-                                                    setFile([]);
-                                                    setImageSend("");
-                                                }}
-                                                cursor={"pointer"}
-                                                d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 
-                                                0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 
-                                                45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 
-                                                0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
-                                        </svg>
+                                                <path 
+                                                    onClick={() => {
+                                                        setFile([]);
+                                                        setImageSend("");
+                                                    }}
+                                                    cursor={"pointer"}
+                                                    d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 
+                                                    0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 
+                                                    45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 
+                                                    0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                                            </svg>
                                         </span>
                                         
                                         <Text>{imageSend}</Text></div>)
@@ -272,13 +344,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                     <AttachmentIcon cursor={'pointer'} onClick={selectFile} />
                                     <input 
                                         type='file' 
-                                        accept="image/*" 
+                                        accept="image/png, image/gif, image/jpeg" 
                                         ref={fileRef}
                                         style={{display: "none"}}
                                         onChange={e => {
                                             console.log(e.target.files[0])
-                                            setFile(e.target.files[0])
+                                            // setFile(e.target.files[0])
                                             setImageSend(e.target.files[0].name)
+                                            uploadImage(e.target.files[0])
                                         }}/>
                                 </InputRightElement>
                             </InputGroup>
