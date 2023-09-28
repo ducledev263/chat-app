@@ -23,7 +23,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [newMessage, setNewMessage] = useState("")
-    const { user, selectedChat, setSelectedChat, notification, setNotification } = ChatState();
+    const { user, selectedChat, setSelectedChat, notification, setNotification, imageReceive, setImageReceive } = ChatState();
     const [socketConnected, setSocketConnected] = useState(false)
     const toast = useToast();
     const [showPicker, setShowPicker] = useState(false);
@@ -101,7 +101,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     })
 
     const sendMessage = async (e) => {
-        if(e.key === "Enter" && newMessage) {
+        if(e.key === "Enter" && newMessage && !imageSend) {
             try {
                 socket.emit("stop typing", selectedChat._id);
                 const config = {
