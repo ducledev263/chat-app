@@ -348,10 +348,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                         ref={fileRef}
                                         style={{display: "none"}}
                                         onChange={e => {
-                                            console.log(e.target.files[0])
+                                            console.log(e.target.files[0]);
                                             // setFile(e.target.files[0])
-                                            setImageSend(e.target.files[0].name)
-                                            uploadImage(e.target.files[0])
+                                            setImageSend(e.target.files[0].name);
+                                            uploadImage(e.target.files[0]);
                                         }}/>
                                 </InputRightElement>
                             </InputGroup>
