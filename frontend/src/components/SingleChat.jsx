@@ -101,6 +101,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     })
 
     const uploadImage = (e) => {
+        if (e.size >= 10485700) {
+            toast({
+                title: "Error Occured!",
+                description: "File size's too big. Maximum size is ...",
+                status: "error",
+                duration: 2500,
+                isClosable: true,
+                position: "top",
+            });
+            return;
+        }
         if (e.type === "image/jpeg" || e.type === "image/png" || e.type === "image/gif") {
             const data = new FormData();
             data.append("file", e);
@@ -294,12 +305,19 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                     </div> : (<div></div>)}*/}
                                     { imageSend 
                                         ? (<div className='flex flex-row-reverse bg-[#BEE3F8] mt-2'>
-                                        <span className='flex justify-center items-center h-full ml-3'>
+                                        <span 
+                                            className='flex justify-center items-center h-full ml-3'
+                                            onClick={() => {
+                                                setFile([]);
+                                                setImageSend("");
+                                                setImageReceive();
+                                            }}>
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512">
                                                 <path 
                                                     onClick={() => {
                                                         setFile([]);
                                                         setImageSend("");
+                                                        setImageReceive();
                                                     }}
                                                     cursor={"pointer"}
                                                     d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 
