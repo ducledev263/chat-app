@@ -114,6 +114,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             return;
         }
         if (e.type === "image/jpeg" || e.type === "image/png" || e.type === "image/gif") {
+            setLoading(true);
             const data = new FormData();
             data.append("file", e);
             data.append("upload_preset", "chat-app");
@@ -205,6 +206,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
                     socket.emit('new message', data)
                     setMessages([...messages, data])
+                    setImageSend()
+                    setImageReceive()
                     
             } catch (error) {
                 toast({
@@ -327,7 +330,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                                     0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
                                             </svg>
                                         </span>
-                                        
+                                        {loading 
+                                            ? <Spinner />
+                                            : <span></span>}
                                         <Text>{imageSend}</Text></div>)
                                         : (<div></div>)}
                         </Box>
