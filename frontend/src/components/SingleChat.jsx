@@ -28,7 +28,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const toast = useToast();
     const [showPicker, setShowPicker] = useState(false);
     const [file, setFile] = useState([]);
-    const [imageSend, setImageSend] = useState("")
+    const [imageSend, setImageSend] = useState();
 
     const onEmojiSelect = (emojiObject) => {
         setNewMessage(prevInput => prevInput + emojiObject.native)
@@ -99,6 +99,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         }
         });
     })
+
+    useEffect(() => {
+      console.log(file)
+    }, [setFile]);
 
     const sendMessage = async (e) => {
         if(e.key === "Enter" && newMessage) {
