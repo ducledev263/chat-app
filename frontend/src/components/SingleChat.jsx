@@ -29,6 +29,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [showPicker, setShowPicker] = useState(false);
     const [file, setFile] = useState([]);
     const [imageSend, setImageSend] = useState();
+    const [loadingImage, setLoadingImage] = useState(false)
 
     const onEmojiSelect = (emojiObject) => {
         setNewMessage(prevInput => prevInput + emojiObject.native)
@@ -114,7 +115,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             return;
         }
         if (e.type === "image/jpeg" || e.type === "image/png" || e.type === "image/gif") {
-            setLoading(true);
+            setLoadingImage(true);
             const data = new FormData();
             data.append("file", e);
             data.append("upload_preset", "chat-app");
@@ -126,7 +127,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             .then((data) => {
                 console.log(data)
                 setImageReceive(data.url.toString())
-                setLoading(false)
+                setLoadingImage(false)
                 toast({
                     title: "Image uploaded successfully!",
                     status: "success",
@@ -330,8 +331,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                                     0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
                                             </svg>
                                         </span>
-                                        {loading 
-                                            ? <Spinner />
+                                        {loadingImage 
+                                            ? <Spinner mr={5}/>
                                             : <span></span>}
                                         <Text>{imageSend}</Text></div>)
                                         : (<div></div>)}
