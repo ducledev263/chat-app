@@ -36,7 +36,11 @@ const ScrollableChat = ({ messages }) => {
                             padding: "5px 15px",
                             maxWidth: "75%",
                         }}
-                        >{m.content.split(" ").slice(1).join(" ")}</span>    
+                        >{m.content.split(" ")[0] === "image"
+                            ? (<div></div>)
+                            : ( m.content.split(" ")[0] === "string"
+                                ? m.content.split(" ").slice(1).join(" ")
+                                : (<div></div>))}</span>    
                 </div>
             )
             
