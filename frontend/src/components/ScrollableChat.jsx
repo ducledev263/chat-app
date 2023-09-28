@@ -40,7 +40,7 @@ const ScrollableChat = ({ messages }) => {
                             ? (<div></div>)
                             : ( m.content.split(" ")[0] === "string"
                                 ? m.content.split(" ").slice(1).join(" ")
-                                : (<div></div>))}</span>    
+                                : (<div>{m.content}</div>))}</span>    
                 </div>
             )
             
