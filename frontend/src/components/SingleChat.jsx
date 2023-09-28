@@ -331,11 +331,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                                     0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
                                             </svg>
                                         </span>
-                                        <Text>{imageSend}</Text></div>)
-                                        : (<div></div>)}
+                                        <Text>{imageSend}</Text>
                                         {loadingImage 
                                             ? <Spinner mr={5}/>
                                             : <span></span>}
+                                        </div>)
+                                        : (<div></div>)}
                         </Box>
                         <FormControl onKeyDown={sendMessage} isRequired mt={3}>
                             <InputGroup>
