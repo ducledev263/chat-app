@@ -100,10 +100,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         });
     })
 
-    useEffect(() => {
-      console.log(file)
-    }, [setFile]);
-
     const sendMessage = async (e) => {
         if(e.key === "Enter" && newMessage) {
             try {
@@ -280,6 +276,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                         ref={fileRef}
                                         style={{display: "none"}}
                                         onChange={e => {
+                                            console.log(e.target.files[0])
                                             setFile(e.target.files[0])
                                             setImageSend(e.target.files[0].name)
                                         }}/>
