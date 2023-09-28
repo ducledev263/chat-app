@@ -110,6 +110,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 isClosable: true,
                 position: "top",
             });
+            setImageSend();
             return;
         }
         if (e.type === "image/jpeg" || e.type === "image/png" || e.type === "image/gif") {
@@ -367,7 +368,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                                         style={{display: "none"}}
                                         onChange={e => {
                                             console.log(e.target.files[0]);
-                                            // setFile(e.target.files[0])
                                             setImageSend(e.target.files[0].name);
                                             uploadImage(e.target.files[0]);
                                         }}/>
