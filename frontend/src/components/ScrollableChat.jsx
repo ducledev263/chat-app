@@ -36,7 +36,7 @@ const ScrollableChat = ({ messages }) => {
                             padding: "5px 15px",
                             maxWidth: "75%",
                         }}
-                        >{m.content}</span>    
+                        >{m.content.split(" ").slice(1).join(" ")}</span>    
                 </div>
             )
             

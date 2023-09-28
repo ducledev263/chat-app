@@ -114,7 +114,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     setNewMessage("");
                     const { data } = await axios.post("https://chat-app-backend-zzgd.onrender.com/api/message",
                         {
-                            content: newMessage,
+                            content: 'string ' + newMessage,
                             chatId: selectedChat._id,
                             },
                             config
